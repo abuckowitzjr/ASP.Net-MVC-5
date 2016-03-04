@@ -1,0 +1,18 @@
+﻿@model RecipeSite.Domain.Entities.Recipe
+
+<div class="well">
+    <h3>
+        <strong>@Model.RecipeName</strong>
+    </h3>
+
+    @using (Html.BeginForm("AddToMealPlan", "MealPlan"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.RecipeID)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input type="submit" class="btn btn-success" value="Add to Meal Plan" />
+        </div>
+    }
+    <span class="lead">@Model.RecipeInstructions</span>
+</div>
+

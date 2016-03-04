@@ -1,0 +1,45 @@
+﻿@model RecipeSite.WebUI.Models.MealPlanIndexViewModel
+
+@{
+    ViewBag.Title = "RecipeSite: Your Meal Plan";
+}
+<style>
+    #mealplanTable td { vertical-align: middle; }
+</style>
+
+<h2>Your Meal Plan</h2>
+<table id="mealplanTable" class="table">
+    <thead>
+    <tr>
+        <th>Recipe Category</th>
+        <th>Recipe Name</th>
+        <th>Recipe Instructions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var line in Model.MealPlan.Lines)
+    {
+        <tr>
+            <td class="text-left">@line.Recipe.RecipeCategory</td>
+            <td class="text-left">@line.Recipe.RecipeName</td>
+            <td class="text-left">@line.Recipe.RecipeInstructions</td>
+            <td>
+                @using (Html.BeginForm("RemoveFromMealPlan", "MealPlan"))
+                {
+                    @Html.Hidden("RecipeID", line.Recipe.RecipeID)
+                    @Html.HiddenFor(x => x.ReturnUrl)
+                    <input class="btn btn-sm btn-warning" type="submit" value="Remove" />
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Adding Meals</a>
+    @*@Html.ActionLink("Complete Meal Plan", "Complete", null, new {@class = "btn btn-primary"})*@
+</div>
+

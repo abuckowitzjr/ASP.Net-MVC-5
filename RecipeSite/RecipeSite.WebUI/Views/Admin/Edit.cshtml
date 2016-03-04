@@ -1,0 +1,41 @@
+﻿@model RecipeSite.Domain.Entities.Recipe
+
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.RecipeName;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edit @Model.RecipeName</h3>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.RecipeID)
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                if (property.PropertyName != "RecipeID" && property.PropertyName != "CustomerID")
+                {
+                    <div class="form-group">
+                        <label>@(property.DisplayName ?? property.PropertyName)</label>
+                        @if (property.PropertyName == "RecipeInstructions")
+                        {
+                            @Html.TextArea(property.PropertyName, null, new {@class = "form-control", rows = 5})
+                        }
+                        else
+                        {
+                            @Html.TextBox(property.PropertyName, null, new {@class = "form-control"})
+                        }
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="panel-footer">
+            <input type="submit" value="Save" class="btn btn-primary"/>
+            @Html.ActionLink("Cancel and return to list", "Index", null, new {@class = "btn btn-default"})
+        </div>
+    }
+</div>
