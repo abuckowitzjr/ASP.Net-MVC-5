@@ -1,0 +1,15 @@
+﻿@model RecipeSite.WebUI.Models.RecipeListViewModel
+
+@{
+    ViewBag.Title = "Recipe";
+}
+
+@foreach (var r in Model.Recipe)
+{
+    @Html.Partial("RecipeSummary", r)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>
+
